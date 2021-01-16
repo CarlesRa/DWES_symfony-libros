@@ -1,0 +1,21 @@
+{% extends 'layout.html.twig' %}
+{% block title %}Libros{% endblock %}
+{% block content %}
+
+    <h1>Listado de libros</h1>
+    <div class="lista-libros">
+        {% if libros %}
+            {% for libro in libros %}
+                <ul>
+                    <li>
+                        <a href="{{path('libro',{'isbn': libro.isbn})}}">{{libro.titulo}}</a>
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <h1>No hay libros disponibles</h1>        
+        {% endif %}
+    </div>
+    
+
+{% endblock %}

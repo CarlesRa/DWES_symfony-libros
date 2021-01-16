@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <header>
+        <h1>Biblioteca particular</h1>
+        <nav>
+            <ul class="menu">
+                <li><a href="{{path('inicio')}}">inicio</a></li>
+                <li><a href="{{path('libros')}}">ver libros</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    
+    <footer>
+        
+        <div>
+            <hr>
+            <P>-Desarrollo Web en entorno Servidor-</p>
+        </div>
+    </footer>
+
+{% endblock %}
