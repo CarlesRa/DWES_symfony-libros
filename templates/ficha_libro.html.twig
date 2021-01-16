@@ -3,11 +3,11 @@
 {% block content %}
 
     {% if libro %}
-    <div>
+    <div class="ficha-libro">
         {% for lib in libro %}
-            <h2>Título: {{ lib.titulo }}</h2>
-            <h2>Autor: {{ lib.autor }}</h2>
-            <h2>Páginas: {{ lib.paginas }}</h2>
+            <h2>Título: {{ lib.titulo }}.</h2>
+            <h2>Autor: {{ lib.autor }}.</h2>
+            <h2>Páginas: {{ lib.paginas }}.</h2>
         {% endfor %}
     <div>
     {% else %}
