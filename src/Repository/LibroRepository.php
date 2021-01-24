@@ -26,8 +26,7 @@ class LibroRepository extends ServiceEntityRepository
         $entityManager = $this->getEntityManager();
         $query = $entityManager->createQuery('SELECT lib FROM App\Entity\Libro lib
                                               WHERE lib.paginas <= :paginas');
-        $query->setParameter('paginas', $paginas);
-        return $query->getResult();
+        return $query->setParameter('paginas', $paginas)->getResult();
     }
     // /**
     //  * @return Libro[] Returns an array of Libro objects

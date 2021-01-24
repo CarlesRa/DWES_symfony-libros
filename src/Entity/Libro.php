@@ -32,6 +32,11 @@ class Libro
      */
     private $paginas;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Editorial::class)
+     */
+    private $editorial;
+
     public function getIsbn(): ?string
     {
         return $this->isbn;
@@ -76,6 +81,18 @@ class Libro
     public function setPaginas(int $paginas): self
     {
         $this->paginas = $paginas;
+
+        return $this;
+    }
+
+    public function getEditorial(): ?Editorial
+    {
+        return $this->editorial;
+    }
+
+    public function setEditorial(?Editorial $editorial): self
+    {
+        $this->editorial = $editorial;
 
         return $this;
     }

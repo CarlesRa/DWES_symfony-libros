@@ -7,6 +7,14 @@
         <h2>Título: {{ libro.titulo }}.</h2>
         <h2>Autor: {{ libro.autor }}.</h2>
         <h2>Páginas: {{ libro.paginas }}.</h2>
+        <h2>Editorial: 
+            {% if libro.editorial %}
+                {{libro.editorial.nombre}}
+            {% else %}
+                N/A
+            {% endif %} 
+        </h2>
+
     <div>
     {% else %}
         <h1>No existe el libro</h1>

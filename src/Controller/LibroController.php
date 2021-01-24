@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Libro;
+use App\Entity\Editorial;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,14 +37,11 @@ use Symfony\Component\Routing\Annotation\Route;
             $libro = $this->getDoctrine()
                           ->getRepository(Libro::class)
                           ->find($isbn);
-            if ($libro) {
-                return $this->render('ficha_libro.html.twig', array('libro' => $libro));
-            }
-            return new Response('No se localiza el libro');
+            return $this->render('ficha_libro.html.twig', array('libro' => $libro));
         }
 
         /**
-         * @Route("/insertar/", name="insertar")
+         * @Route("/libros/insertar/", name="insertar")
          */
         public function insertar() {
             foreach($this->libros as $libro) {
@@ -85,25 +83,46 @@ use Symfony\Component\Routing\Annotation\Route;
         }
 
         /**
-        * @Route("/filtrar/{paginas}", name="filtrar")
+        * @Route("/libros/paginas/{paginas}", name="filtrar")
         */
         public function filtrar($paginas) {
+            /**
+             * @var LibroRepository
+             */
             $repository = $this->getDoctrine()->getRepository(Libro::class);
             $libros = $repository->nPaginas($paginas);
             return $this->render('lista_libros_paginas.html.twig', array('libros' => $libros));
         }
 
         /**
-        * 
-        */  
-        /* public function filtrarPaginas($paginas) {
-            $repository = $this->getDoctrine()->getRepository(Libro::class);
-            $libros = $repository->nPaginas($paginas); 
-            if ($libros) {
-                return $this->render('lista_libros_paginas.html.twig');
-            }
-        } */
+        * @Route("/libros/insertarConEditorial", name="insertar_editorial")
+        */
+        public function insertarConEditorial() {
+            /**
+             * @var EditorialRepository
+             */
+            $entityManager = $this->getDoctrine()->getManager();
+            $editrorial = new Editorial();
+            $editrorial->setNombre('Alfaguara');
+            $entityManager->persist($editrorial);
 
+            try {
+                $entityManager->flush();
+                // Si se inserta la editorial correctamente
+                $libro = new Libro();
+                $libro->setIsbn('2222BBBB');
+                $libro->setTitulo('Libro de prueba con editorial');
+                $libro->setAutor('Autor de prueba con editorial');
+                $libro->setPaginas(200);
+                $libro->setEditorial($editrorial);
+                
+                $entityManager->persist($libro);
+                $entityManager->flush();
+                return $this->redirectToRoute('listar_libros');
+            } catch(Exception $e) {
+                return new Response('Error al insertar....');
+            }
+        }
     }
 
 ?>
