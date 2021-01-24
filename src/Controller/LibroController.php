@@ -30,18 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
         }
 
         /**
-         * @Route("/libro/{isbn}", name="ficha_libro")
-         */
-        public function loadLibroByIsbn($isbn) {
-
-            $libro = $this->getDoctrine()
-                          ->getRepository(Libro::class)
-                          ->find($isbn);
-            return $this->render('ficha_libro.html.twig', array('libro' => $libro));
-        }
-
-        /**
-         * @Route("/libros/insertar/", name="insertar")
+         * @Route("/libro/insertar/", name="insertar")
          */
         public function insertar() {
             foreach($this->libros as $libro) {
@@ -61,6 +50,16 @@ use Symfony\Component\Routing\Annotation\Route;
             return $this->redirectToRoute('listar_libros');
         }
 
+        /**
+         * @Route("/libro/{isbn}", name="ficha_libro")
+         */
+        public function loadLibroByIsbn($isbn) {
+
+            $libro = $this->getDoctrine()
+                          ->getRepository(Libro::class)
+                          ->find($isbn);
+            return $this->render('ficha_libro.html.twig', array('libro' => $libro));
+        }
 
         /**
          * @Route("/eliminar/{isbn}", name="eliminar")

@@ -6,12 +6,13 @@ html {
     color: white;
 }
 body {
-    width: 60%;
+    width: 80%;
     height: 100%;
     background-color: rgb(70, 119, 165);
 }
 h1 {
     font-size: 4rem;
+    text-align: center;
 }
 h2 {
     font-size: 2rem;

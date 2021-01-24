@@ -34,6 +34,7 @@ class Libro
 
     /**
      * @ORM\ManyToOne(targetEntity=Editorial::class)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $editorial;
 
