@@ -1,6 +1,9 @@
 <?php  
 
 namespace App\Controller;
+
+use App\Entity\Libro;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,21 +19,91 @@ use Symfony\Component\Routing\Annotation\Route;
         );
 
         /**
-        * @Route("/libros", name="libros")
+        * @Route("/libros", name="listar_libros")
         */  
         public function loadLibros() {
-            return $this->render('ficha_libros.html.twig', array('libros' => $this->libros));
+            $repository = $this->getDoctrine()->getRepository(Libro::class);
+            $libros = $repository->findAll();
+
+            return $this->render('ficha_libros.html.twig', array('libros' => $libros));
         }
 
         /**
-         * @Route("/libro/{isbn}", name="libro")
+         * @Route("/libro/{isbn}", name="ficha_libro")
          */
         public function loadLibroByIsbn($isbn) {
-            $result = array_filter($this->libros, function($libro) use ($isbn) {
-                return strpos($libro["isbn"], $isbn) !== false;
-            });
-            return $this->render('ficha_libro.html.twig', array('libro' => $result));
+
+            $libro = $this->getDoctrine()
+                          ->getRepository(Libro::class)
+                          ->find($isbn);
+            if ($libro) {
+                return $this->render('ficha_libro.html.twig', array('libro' => $libro));
+            }
+            return new Response('No se localiza el libro');
         }
+
+        /**
+         * @Route("/insertar/", name="insertar")
+         */
+        public function insertar() {
+            foreach($this->libros as $libro) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $newLibro = new Libro();
+                $newLibro->setIsbn($libro['isbn']);
+                $newLibro->setTitulo($libro['titulo']);
+                $newLibro->setAutor($libro['autor']);
+                $newLibro->setPaginas($libro['paginas']);
+                $entityManager->persist($newLibro);
+                try {
+                    $entityManager->flush();
+                } catch(Exception $e) {
+                    return new Response('Error al insertar los libros');
+                }
+            }
+            return $this->redirectToRoute('listar_libros');
+        }
+
+
+        /**
+         * @Route("/eliminar/{isbn}", name="eliminar")
+         */
+        public function eliminarLibro($isbn) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $repository = $this->getDoctrine()->getRepository(Libro::class);
+            $libro = $repository->find($isbn);
+
+            if ($libro) {
+                $entityManager->remove($libro);
+
+                try {
+                    $entityManager->flush();
+                    return $this->redirectToRoute('listar_libros');
+                } catch (Exception $e) {
+                    return new Response('Error al eliminar el libro');
+                }
+            }
+        }
+
+        /**
+        * @Route("/filtrar/{paginas}", name="filtrar")
+        */
+        public function filtrar($paginas) {
+            $repository = $this->getDoctrine()->getRepository(Libro::class);
+            $libros = $repository->nPaginas($paginas);
+            return $this->render('lista_libros_paginas.html.twig', array('libros' => $libros));
+        }
+
+        /**
+        * 
+        */  
+        /* public function filtrarPaginas($paginas) {
+            $repository = $this->getDoctrine()->getRepository(Libro::class);
+            $libros = $repository->nPaginas($paginas); 
+            if ($libros) {
+                return $this->render('lista_libros_paginas.html.twig');
+            }
+        } */
+
     }
 
 ?>

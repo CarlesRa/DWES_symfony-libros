@@ -4,11 +4,9 @@
 
     {% if libro %}
     <div class="ficha-libro">
-        {% for lib in libro %}
-            <h2>Título: {{ lib.titulo }}.</h2>
-            <h2>Autor: {{ lib.autor }}.</h2>
-            <h2>Páginas: {{ lib.paginas }}.</h2>
-        {% endfor %}
+        <h2>Título: {{ libro.titulo }}.</h2>
+        <h2>Autor: {{ libro.autor }}.</h2>
+        <h2>Páginas: {{ libro.paginas }}.</h2>
     <div>
     {% else %}
         <h1>No existe el libro</h1>
