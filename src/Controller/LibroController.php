@@ -15,10 +15,10 @@ use Symfony\Component\HttpFoundation\Request;
     class LibroController extends AbstractController{
 
         private $libros = array(
-            array("isbn" => "A001", "titulo" => "JarryChoped", "autor" => "JK Bowling", "paginas" => 100),
+            array("isbn" => "A001", "titulo" => "Jarry Choped", "autor" => "JK Bowling", "paginas" => 100),
             array("isbn" => "A002", "titulo" => "El señor de los palillos", "autor" => "JRR TolQuien", "paginas" => 200),
             array("isbn" => "A003", "titulo" => "Los polares de la tierra", "autor" => "Ken Follonett", "paginas" => 300),
-            array("isbn" => "A004", "titulo" => "Los juegos de enjambre", "autor" => "Suzanne Collonins", "paginas" => 400)
+            array("isbn" => "A004", "titulo" => "Los juegos del enjambre", "autor" => "Suzanne Collonins", "paginas" => 400)
         );
 
         /**
@@ -36,6 +36,29 @@ use Symfony\Component\HttpFoundation\Request;
         */
         public function crear(Request $request) {
             $libro = new Libro();
+            $formulario = $this->createForm(LibroType::class, $libro);
+            $formulario->handleRequest($request);
+            if ($formulario->isSubmitted() && $formulario->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($libro);
+                try {
+                    $entityManager->flush();
+                    return $this->redirectToRoute('listar_libros');
+                }catch (Exception $e) {
+                    return new Response('herror al insertar el libro');
+                }
+            }
+            return $this->render('nuevo_libro.html.twig',
+                                 array('formulario' => $formulario->createView()));
+        }
+
+        /**
+        * @Route("/editar/{isbn}", name="editar")
+        */
+        public function editar(Request $request, $isbn) {
+            $libro = $this->getDoctrine()
+                          ->getRepository(Libro::class)
+                          ->find($isbn);
             $formulario = $this->createForm(LibroType::class, $libro);
             $formulario->handleRequest($request);
             if ($formulario->isSubmitted() && $formulario->isValid()) {
