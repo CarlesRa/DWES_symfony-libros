@@ -13,9 +13,10 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" href="{{path('inicio')}}">inicio</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{path('listar_libros')}}">ver libros</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{{path('nuevo')}}">Nuevo</a></li>
                         <li class="nav-item"><a class="nav-link active" href="{{path('insertar_editorial')}}">InsertarConEditorial</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="{{path('filtrar', {'paginas': 100})}}">Libros(-=100p.)</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="{{path('filtrar', {'paginas': 200})}}">Libros(-=200p.)</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{{path('filtrar', {'paginas': 100})}}">Libros(<=100p.)</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="{{path('filtrar', {'paginas': 200})}}">Libros(<=200p.)</a></li>
                     </ul>
                 </div>
             </div>

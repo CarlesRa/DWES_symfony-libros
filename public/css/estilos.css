@@ -20,6 +20,11 @@ body {
     font-size: 4rem;
     
 }
+.form-group > button{
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 38%;
+}
 .text-big {
     font-size: 2rem;
 }
@@ -28,6 +33,13 @@ body {
     height: 200px;
     padding: 10px;
     border-radius: 15px;
+}
+
+.back-form {
+    background: rgba(10, 188, 252, 0.7);
+    padding: 10px;
+    border-radius: 15px;
+    width: 400px;
 }
 
 .center {

@@ -8,6 +8,8 @@ use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\LibroType;
+use Symfony\Component\HttpFoundation\Request;
 
 
     class LibroController extends AbstractController{
@@ -30,21 +32,24 @@ use Symfony\Component\Routing\Annotation\Route;
         }
 
         /**
-        * @Route("/crear", name="crear")
+        * @Route("/nuevo", name="nuevo")
         */
         public function crear(Request $request) {
             $libro = new Libro();
             $formulario = $this->createForm(LibroType::class, $libro);
             $formulario->handleRequest($request);
-            if ($formulario->isSubmited() && $formulario->isValid()) {
+            if ($formulario->isSubmitted() && $formulario->isValid()) {
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($libro);
                 try {
                     $entityManager->flush();
+                    return $this->redirectToRoute('listar_libros');
                 }catch (Exception $e) {
                     return new Response('herror al insertar el libro');
                 }
             }
+            return $this->render('nuevo_libro.html.twig',
+                                 array('formulario' => $formulario->createView()));
         }
 
         /**
