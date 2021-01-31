@@ -28,6 +28,16 @@ class LibroRepository extends ServiceEntityRepository
                                               WHERE lib.paginas <= :paginas');
         return $query->setParameter('paginas', $paginas)->getResult();
     }
+
+    /**
+     * @return Libro[]
+     */
+    public function buscarLibros($filtro) {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT lib FROM App\Entity\Libro lib
+                                              WHERE lib.titulo LIKE :filtro');
+        return $query->setParameter('filtro', '%'.$filtro.'%')->getResult();
+    }
     // /**
     //  * @return Libro[] Returns an array of Libro objects
     //  */

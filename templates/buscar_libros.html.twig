@@ -1,15 +1,21 @@
 {% extends 'layout.html.twig' %}
-{% block title %}Libros{% endblock %}
+{% block title %}Ficha del libro{% endblock %}
 {% block content %}
 
-    
-    <div class="lista-libros">
-        {% if libros %}
-        <div class="back-rgba text-center">
-            <h1 class="title-back">Listado de libros</h1>
+    <div class="container back-form">
+        <div class="row text-center">
+            <h1>Buscar</h1>
         </div>
-        <hr>
-        <div class="container offset-md-2">
+        <div class="col-md-12 ">
+            {% form_theme formulario 'bootstrap_4_layout.html.twig' %}
+            {{ form_start(formulario) }}
+            {{ form_widget(formulario) }}
+            {{ form_end(formulario) }}
+        </div>
+    </div>
+    <div class="row">
+        {% if libros %}
+            <div class="container offset-md-2">
             {% for libro in libros %}
                 <ul class="list-group list-group-horizontal col-md-6 mt-1">
                     <a class="text-big list-group-item list-group-item-action list-group-item-primary col-md-4" href="{{path('ficha_libro',{'isbn': libro.isbn})}}">
@@ -28,16 +34,12 @@
                     </a>
                 </ul>
             {% endfor %}
+            {% else %} 
+            <div class="col-md-12 offset-md-2 mt-5 back">
+                <h1>Introduzca un nuevo termino de búsquda</h1>
+            </div>
         </div>
-            
-        {% else %}
-        <div class="container back-title">
-            <h1 class="title-back">No hay libros disponibles</h1>
-            <a class="btn btn-primary text-big" href="{{path('insertar')}}">Insertar Libros</a> 
-        </div>
-        <hr>
         {% endif %}
     </div>
-    
 
 {% endblock %}

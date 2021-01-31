@@ -32,10 +32,28 @@ body {
 .text-big {
     font-size: 2rem;
 }
+
+.back-title {
+    background: rgba(10, 188, 252, 0.7);
+    height: 200px;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.back {
+    background: rgba(10, 188, 252, 0.7);
+    height: 200px;
+    padding: 10px;
+    width: 800px;
+    height: 100px;
+    border-radius: 15px;
+}
+
 .back-rgba {
     background: rgba(10, 188, 252, 0.7);
     height: 200px;
     padding: 10px;
+    width: 520px;
     border-radius: 15px;
 }
 

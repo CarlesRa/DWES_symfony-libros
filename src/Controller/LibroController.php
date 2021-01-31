@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\LibroType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -50,6 +52,28 @@ use Symfony\Component\HttpFoundation\Request;
             }
             return $this->render('nuevo_libro.html.twig',
                                  array('formulario' => $formulario->createView()));
+        }
+
+        /**
+        * @Route("/buscar", name="buscar")
+        */
+        public function buscar(Request $request) {
+            $libros = null;
+            $formulario = $this->createFormBuilder()
+                          ->add('filtro', TextType::class)
+                          ->add('save', SubmitType::class, array('label' => 'Buscar'))
+                          ->getForm();
+            $formulario->handleRequest($request);
+            if ($formulario->isSubmitted() && $formulario->isValid()) {
+                /**
+                * @var (LibroRepository)
+                */
+                $repository = $this->getDoctrine()->getRepository(Libro::class);
+                $filtro = $formulario->getData()['filtro'];
+                $libros = $repository->buscarLibros($filtro);
+            }
+            return $this->render('buscar_libros.html.twig', 
+                   array('formulario' => $formulario->createView(), 'libros' => $libros));
         }
 
         /**

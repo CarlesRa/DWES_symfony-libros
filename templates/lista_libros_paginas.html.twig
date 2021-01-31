@@ -21,8 +21,10 @@
         </div>
             
         {% else %}
-            <h1>No hay libros disponibles</h1>  
-            <a class="btn" href="{{path('listar_libros')}}">Volver a todos los libros</a>   
+            <div class="container offset-md-2 back-title">
+                <h1>No hay libros disponibles</h1>  
+                <a class="btn btn-primary" href="{{path('listar_libros')}}">Volver a todos los libros</a>   
+            </div>
         {% endif %}
     </div>
     
