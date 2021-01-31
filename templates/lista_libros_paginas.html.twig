@@ -7,14 +7,19 @@
 
     <div class="lista-libros">
         {% if libros %}
-        <h1>Listado de libros por páginas</h1>
+        <div class="back-rgba">
+            <h1 class="title-back">Listado de libros por páginas</h1>
+        </div>
+        <hr>
+        <div class="container offset-md-2">
             {% for libro in libros %}
-                <ul>
-                    <li> 
-                        <a href="{{path('ficha_libro',{'isbn': libro.isbn})}}">{{libro.titulo}}</a>
-                    </li>
+                <ul class="list-group col-md-5 mt-1">
+                    <a class="text-big list-group-item list-group-item-action list-group-item-primary col-md-4"  
+                       href="{{path('ficha_libro',{'isbn': libro.isbn})}}">{{libro.titulo}}</a>
                 </ul>
             {% endfor %}
+        </div>
+            
         {% else %}
             <h1>No hay libros disponibles</h1>  
             <a class="btn" href="{{path('listar_libros')}}">Volver a todos los libros</a>   

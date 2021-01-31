@@ -3,18 +3,20 @@
 {% block content %}
 
     {% if libro %}
-    <div class="ficha-libro">
-        <h2>Título: {{ libro.titulo }}.</h2>
-        <h2>Autor: {{ libro.autor }}.</h2>
-        <h2>Páginas: {{ libro.paginas }}.</h2>
-        <h2>Editorial: 
-            {% if libro.editorial %}
-                {{libro.editorial.nombre}}
-            {% else %}
-                N/A
-            {% endif %} 
-        </h2>
-
+    <div class="card text-white bg-info mb-3" style="max-width: 35rem;">
+            <div class="card-header"><h1>{{ libro.titulo }}</h1></div>
+            <div class="card-body">
+                <h2>Autor: {{ libro.autor }}.</h2>
+                <h2>Páginas: {{ libro.paginas }}.</h2>
+                <h2>Editorial: 
+            
+                {% if libro.editorial %}
+                    {{libro.editorial.nombre}}
+                {% else %}
+                    N/A
+                {% endif %} 
+                </h2>
+            </div>
     <div>
     {% else %}
         <h1>No existe el libro</h1>

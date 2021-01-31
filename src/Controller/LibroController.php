@@ -30,6 +30,24 @@ use Symfony\Component\Routing\Annotation\Route;
         }
 
         /**
+        * @Route("/crear", name="crear")
+        */
+        public function crear(Request $request) {
+            $libro = new Libro();
+            $formulario = $this->createForm(LibroType::class, $libro);
+            $formulario->handleRequest($request);
+            if ($formulario->isSubmited() && $formulario->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($libro);
+                try {
+                    $entityManager->flush();
+                }catch (Exception $e) {
+                    return new Response('herror al insertar el libro');
+                }
+            }
+        }
+
+        /**
          * @Route("/libro/insertar/", name="insertar")
          */
         public function insertar() {
