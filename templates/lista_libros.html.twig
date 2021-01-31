@@ -2,14 +2,16 @@
 {% block title %}Libros{% endblock %}
 {% block content %}
 
-    
+    {% block form %}{% endblock %}
     <div class="lista-libros">
         {% if libros %}
-        <div class="back-rgba text-center">
-            <h1 class="title-back">Listado de libros</h1>
-        </div>
-        <hr>
-        <div class="container offset-md-2">
+        {% block listado %}
+            <div class="back-rgba text-center">
+                <h1 class="title-back">Listado de libros</h1>
+            </div>
+            <hr>
+        {% endblock %}
+        <div class="container offset-md-2 mt-5">
             {% for libro in libros %}
                 <ul class="list-group list-group-horizontal col-md-6 mt-1">
                     <a class="text-big list-group-item list-group-item-action list-group-item-primary col-md-4" href="{{path('ficha_libro',{'isbn': libro.isbn})}}">
@@ -31,11 +33,17 @@
         </div>
             
         {% else %}
-        <div class="container back-title">
-            <h1 class="title-back">No hay libros disponibles</h1>
-            <a class="btn btn-primary text-big" href="{{path('insertar')}}">Insertar Libros</a> 
-        </div>
-        <hr>
+        
+        {% block mensajes %}
+            {% block mensaje %}
+                <div class="container back-title">
+                <h1 class="title-back">No se encuentran libros</h1>
+                <a class="btn btn-primary text-big" href="{{path('insertar')}}">Insertar Libros</a> 
+            {% endblock %}
+            {% block message %}{% endblock %}
+            </div>
+            <hr>
+        {% endblock %}
         {% endif %}
     </div>
     

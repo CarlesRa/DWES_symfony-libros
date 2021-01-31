@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Request;
             $repository = $this->getDoctrine()->getRepository(Libro::class);
             $libros = $repository->findAll();
 
-            return $this->render('ficha_libros.html.twig', array('libros' => $libros));
+            return $this->render('lista_libros.html.twig', array('libros' => $libros));
         }
 
         /**
