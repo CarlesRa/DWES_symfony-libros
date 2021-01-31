@@ -4,35 +4,48 @@ namespace App\Entity;
 
 use App\Repository\LibroRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=LibroRepository::class)
+ * @UniqueEntity("isbn", message="El isbn ya existe")
  */
 class Libro
 {
 
     /**
+     * @var string $isbn
+     * @Assert\NotNull(message="El isbn es obligatorio")
      * @ORM\Id
      * @ORM\Column(type="string", length=20)
      */
     private $isbn;
 
     /**
+     * @Assert\NotNull(message="El título es obligatorio")
      * @ORM\Column(type="string", length=255)
      */
     private $titulo;
 
     /**
+     * @Assert\NotNull(message="El autor es obligatorio")
      * @ORM\Column(type="string", length=100)
      */
     private $autor;
 
     /**
+     * @Assert\NotNull(message="El campo páginas es obligatorio")
+     * @Assert\Range(
+     *  min = 100,
+     *  minMessage = "El número mínimo de páginas es 100 "
+     * )
      * @ORM\Column(type="integer")
      */
     private $paginas;
 
     /**
+     * @Assert\NotNull(message="El campo editorial es obligatorio")
      * @ORM\ManyToOne(targetEntity=Editorial::class)
      * @ORM\JoinColumn(onDelete="CASCADE")
      */
