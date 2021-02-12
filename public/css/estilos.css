@@ -77,3 +77,24 @@ body {
 .black {
     color: black;
 }
+.red {
+    color: red;
+}
+.bg-red {
+    background: rgba(243, 58, 67, 0.9);
+    padding: 10px;
+    border-radius: 15px;
+    width: 450px;
+}
+
+.border-md-right {
+    border-right: 1px solid silver;
+  }
+  
+  @media (max-width: 768px) {
+  
+    .border-md-right {
+      border-right: none;
+    }
+  
+  }

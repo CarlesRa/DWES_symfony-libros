@@ -37,6 +37,7 @@ use Symfony\Component\HttpFoundation\Request;
         * @Route("/nuevo", name="nuevo")
         */
         public function crear(Request $request) {
+            $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Acceso restringido a administradores');
             $libro = new Libro();
             $formulario = $this->createForm(LibroType::class, $libro);
             $formulario->handleRequest($request);
