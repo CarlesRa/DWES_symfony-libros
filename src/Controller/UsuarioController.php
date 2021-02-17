@@ -47,7 +47,7 @@ class UsuarioController extends AbstractController
             $entityManager->persist($usuario);
             try {
                 $entityManager->flush();
-                return $this->redirectToRoute('libros');
+                return $this->redirectToRoute('listar_libros');
             } catch(Exception $e) {
                 return new Response('herror al insertar el usuario');
             }         
